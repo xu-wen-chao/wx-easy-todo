@@ -1,0 +1,28 @@
+{
+  "name": "easy-todo",
+  "version": "1.0.0",
+  "description": "这是云开发的快速启动指引，其中演示了如何上手使用云开发的三大基础能力：",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf ./dist",
+    "dev": "cross-env NODE_ENV=development gulp dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gulp-sass": "^4.0.2"
+  },
+  "devDependencies": {
+    "axios": "^0.19.2",
+    "cross-env": "^7.0.2",
+    "gulp": "^4.0.2",
+    "gulp-changed": "^4.0.2",
+    "gulp-debug": "^4.0.0",
+    "gulp-if": "^3.0.0",
+    "gulp-jdists": "^2.2.3",
+    "gulp-rename": "^2.0.0",
+    "miniprogram-api-typings": "^2.10.2",
+    "rimraf": "^3.0.2"
+  }
+}
