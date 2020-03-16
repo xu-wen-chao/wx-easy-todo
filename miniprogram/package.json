@@ -11,5 +11,6 @@
   "dependencies": {
     "@vant/weapp": "^1.0.7",
     "miniprogram-api-promise": "^1.0.4"
-  }
+  },
+  "devDependencies": {}
 }

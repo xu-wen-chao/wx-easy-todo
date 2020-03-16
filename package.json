@@ -6,13 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf ./dist",
-    "dev": "cross-env NODE_ENV=development gulp dev"
+    "dev": "cross-env NODE_ENV=development gulp dev",
+    "build": "npm run clean && gulp build"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "gulp-sass": "^4.0.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "axios": "^0.19.2",
     "cross-env": "^7.0.2",
@@ -22,7 +21,9 @@
     "gulp-if": "^3.0.0",
     "gulp-jdists": "^2.2.3",
     "gulp-rename": "^2.0.0",
-    "miniprogram-api-typings": "^2.10.2",
-    "rimraf": "^3.0.2"
+    "gulp-sass": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.3"
   }
 }
