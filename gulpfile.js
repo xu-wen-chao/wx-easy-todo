@@ -6,7 +6,7 @@ const changed = require('gulp-changed')
 const gulpif = require('gulp-if')
 const rename = require('gulp-rename')
 const gulpTs = require('gulp-typescript')
-const tsProject = gulpTs.createProject('./miniprogram/tsconfig.json')
+const tsProject = gulpTs.createProject('./tsconfig.json')
 const sass = require('gulp-sass')
 sass.compiler = require('node-sass')
 
@@ -20,11 +20,12 @@ const miniprogramDist = `${distRoot}/miniprogram`
 const cloudfunctionsDist = `${distRoot}/cloudfunctions`
 const stylePath = `${miniprogramRoot}/**/*.{wxss,scss}`
 const tsPath = `${miniprogramRoot}/**/*.ts`
-const wxmlPath = `${miniprogramRoot}/**/*.wxml`
 const imagesPath = `${miniprogramRoot}/images/**/*.*`
 const nodeModulesPath = 'node_modules'
 const isDev = process.env.NODE_ENV === 'development' // 是否是开发环境
 const ignorePath = `**/${nodeModulesPath}/**/*.*`
+const miniprogramNodeModulesPath = `${miniprogramRoot}/${nodeModulesPath}/**/*.*`
+const miniprogramNodeModulesDist = `${miniprogramDist}/${nodeModulesPath}`
 const copyPaths = [
   `${miniprogramRoot}/**/*.*`,
   `!${tsPath}`,
@@ -60,21 +61,26 @@ const copy = () => src(copyPaths, { ignore: ignorePath })
   .pipe(dest(miniprogramDist))
 
 // 编译移动ts文件(这里的gulp-changed必须声明 {extension: '.js'}，因为后缀从ts变成js了，如果不声明会认为你的文件也是changed了)
-const ts = () =>  tsProject.src()
-  .pipe(gulpif(isDev, changed(miniprogramDist, {extension: '.js'})))
+const ts = () => tsProject.src()
+  .pipe(gulpif(isDev, changed(miniprogramDist, { extension: '.js' })))
   // .pipe(debug({ title: 'T' }))
   .pipe(tsProject())
   .pipe(dest(miniprogramDist))
+
+// 复制移动生产环境需要的node_modules
+const nodeModules = () => src(miniprogramNodeModulesPath)
+  .pipe(gulpif(isDev, changed(miniprogramNodeModulesDist)))
+  .pipe(dest(miniprogramNodeModulesDist))
 
 const watchFiles = () => {
   watch(imagesPath, images)
   watch(stylePath, { ignored: ignorePath }, style)
   watch(tsPath, { ignored: ignorePath }, ts)
   watch(copyPaths, { ignored: ignorePath }, copy)
+  watch(miniprogramNodeModulesPath, nodeModules)
 }
 
-const tasks = parallel(copy, ts, style, projectConfig, cloudFns, images)
+const tasks = parallel(nodeModules, copy, ts, style, projectConfig, cloudFns, images)
 
-exports.cloudFns = cloudFns
 exports.build = tasks
 exports.dev = series(tasks, watchFiles)
