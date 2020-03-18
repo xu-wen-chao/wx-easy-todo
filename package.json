@@ -4,10 +4,10 @@
   "description": "这是云开发的快速启动指引，其中演示了如何上手使用云开发的三大基础能力：",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf ./dist",
-    "dev": "cross-env NODE_ENV=development gulp dev",
-    "build": "npm run clean && gulp build"
+    "dev": "npm run clean && cross-env NODE_ENV=development gulp dev",
+    "build": "npm run clean && gulp build",
+    "build:npm": "gulp npm"
   },
   "author": "",
   "license": "ISC",

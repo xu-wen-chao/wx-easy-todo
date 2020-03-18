@@ -1,3 +1,9 @@
+/*<jdists trigger="prod">
+console.log('1')
+</jdists>*/
+/*<jdists trigger="dev">
+console.log('2')
+</jdists>*/
 App<IAppOption>({
   globalData: {},
   onLaunch() {
