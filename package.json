@@ -5,14 +5,15 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf ./dist",
-    "dev": "npm run clean && cross-env NODE_ENV=development gulp dev",
+    "dev": "cross-env NODE_ENV=development gulp dev",
     "build": "npm run clean && gulp build",
     "build:npm": "gulp npm"
   },
-  "author": "",
+  "author": "xuwenchao",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "@zerollup/ts-transform-paths": "^1.7.15",
     "axios": "^0.19.2",
     "cross-env": "^7.0.2",
     "gulp": "^4.0.2",
@@ -24,6 +25,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-typescript": "^6.0.0-alpha.1",
     "rimraf": "^3.0.2",
+    "ttypescript": "^1.5.10",
     "typescript": "^3.8.3"
   }
 }

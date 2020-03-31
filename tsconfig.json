@@ -2,8 +2,20 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "noImplicitAny": true,
-    "module": "CommonJS",
-    "target": "ES5",
+    "module": "ES2015", // 输出ES6模块
+    "target": "ES2017", // 直接生成ES2017代码，交由小程序编译
+    "baseUrl": "./miniprogram/",
+    "paths": {
+      "utils/*": ["utils/*"],
+      "config/*": ["config/*"],
+      "images/*": ["images/*"],
+      "store/*": ["store/*"],
+      "pages/*": ["pages/*"],
+      "components/*": ["components/*"]
+    },
+    "plugins": [{
+        "transform": "@zerollup/ts-transform-paths"
+    }],
     "allowJs": false,
     "experimentalDecorators": true,
     "noImplicitThis": true,
@@ -18,7 +30,8 @@
     "removeComments": true,
     "pretty": true,
     "strictPropertyInitialization": true,
-    "lib": ["es5"],
+    "noEmitHelpers": true, // 不生成帮助函数，避免重复代码
+    "lib": ["ES5", "ES2015"],
     "typeRoots": [
       "typings"
     ]

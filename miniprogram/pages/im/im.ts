@@ -1,8 +1,7 @@
-import create from '../../omix/create'
-import store from '../../store/index'
+import create from 'utils/omix/create'
+import store from 'store/index'
 
 //获取应用实例
-
 const app = getApp<IAppOption>()
 
 create.Page(store, {

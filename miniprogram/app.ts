@@ -4,21 +4,16 @@ console.log('1')
 /*<jdists trigger="dev">
 console.log('2')
 </jdists>*/
+import wxp from 'utils/wxp'
 App<IAppOption>({
   globalData: {},
-  onLaunch() {
+  async onLaunch() {
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        console.log(res.code)
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      },
-    })
+    const res = await wxp.login()
+    console.log(res)
     // 获取用户信
     wx.getSetting({
       success: res => {

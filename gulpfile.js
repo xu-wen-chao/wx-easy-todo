@@ -7,7 +7,9 @@ const gulpif = require('gulp-if')
 const jdists = require('gulp-jdists')
 const rename = require('gulp-rename')
 const gulpTs = require('gulp-typescript')
-const tsProject = gulpTs.createProject('./tsconfig.json')
+const tsProject = gulpTs.createProject('./tsconfig.json', {
+  typescript: require('ttypescript')
+})
 const sass = require('gulp-sass')
 sass.compiler = require('node-sass')
 
@@ -16,7 +18,7 @@ const miniprogramRoot = 'miniprogram'
 const cloudfunctionsRoot = 'cloudfunctions'
 const miniprogramDist = `${distRoot}/miniprogram`
 const cloudfunctionsDist = `${distRoot}/cloudfunctions`
-const stylePath = `${miniprogramRoot}/**/*.{wxss,scss}`
+const stylePath = `${miniprogramRoot}/**/*.scss`
 const tsPath = `${miniprogramRoot}/**/*.ts`
 const imagesPath = `${miniprogramRoot}/images/**/*.*`
 const nodeModulesPath = 'node_modules'
