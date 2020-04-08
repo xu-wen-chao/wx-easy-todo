@@ -1,13 +1,13 @@
-/*<jdists trigger="prod">
-console.log('1')
-</jdists>*/
-/*<jdists trigger="dev">
-console.log('2')
-</jdists>*/
 import wxp from 'utils/wxp'
+import config from 'config/index'
+wx.cloud.init({
+  // env: config.env,
+  traceUser: true
+})
 App<IAppOption>({
   globalData: {},
   async onLaunch() {
+    console.log(config)
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())

@@ -3,7 +3,6 @@ const fs = require('fs')
 const { src, dest, series, parallel, watch } = require('gulp')
 const debug = require('gulp-debug')
 const changed = require('gulp-changed')
-const gulpif = require('gulp-if')
 const jdists = require('gulp-jdists')
 const rename = require('gulp-rename')
 const gulpTs = require('gulp-typescript')
@@ -17,20 +16,16 @@ const distRoot = 'dist'
 const miniprogramRoot = 'miniprogram'
 const cloudfunctionsRoot = 'cloudfunctions'
 const miniprogramDist = `${distRoot}/miniprogram`
-const cloudfunctionsDist = `${distRoot}/cloudfunctions`
 const stylePath = `${miniprogramRoot}/**/*.scss`
 const tsPath = `${miniprogramRoot}/**/*.ts`
-const imagesPath = `${miniprogramRoot}/images/**/*.*`
 const nodeModulesPath = 'node_modules'
 const isDev = process.env.NODE_ENV === 'development' // 是否是开发环境
-const ignorePath = `**/${nodeModulesPath}/**/*.*`
-const miniprogramNodeModulesPath = `${miniprogramRoot}/${nodeModulesPath}/**/*.*`
-const miniprogramNodeModulesDist = `${miniprogramDist}/${nodeModulesPath}`
+const ignorePath = `./${nodeModulesPath}/**/*.*`
 const copyPaths = [
-  `${miniprogramRoot}/**/*.*`,
+  `./+(${miniprogramRoot}|${cloudfunctionsRoot})/**/*.*`,
+  'project.config.json',
   `!${tsPath}`,
-  `!${stylePath}`,
-  `!${imagesPath}`
+  `!${stylePath}`
 ]
 
 const axios = require('axios')
@@ -49,16 +44,6 @@ request.interceptors.request.use(config => {
 // 构建npm
 const buildNpm = async () => await request.get('/buildnpm')
 
-// 复制移动cloudfunctions下的所有文件
-const cloudFns = () => src([`/**/*.*`], { root: cloudfunctionsRoot })
-  .pipe(changed(cloudfunctionsDist))
-  .pipe(dest(cloudfunctionsDist))
-
-// 处理图片资源
-const images = () => src(imagesPath, { root: miniprogramRoot })
-  .pipe(changed(`${miniprogramDist}/images`))
-  .pipe(dest(`${miniprogramDist}/images`))
-
 // 处理样式
 const style = () => src(stylePath, { ignore: ignorePath })
   .pipe(changed(miniprogramDist))
@@ -66,15 +51,10 @@ const style = () => src(stylePath, { ignore: ignorePath })
   .pipe(rename(path => (path.extname = '.wxss')))
   .pipe(dest(miniprogramDist))
 
-// 复制移动小程序配置文件
-const projectConfig = () => src('project.config.json')
-  .pipe(changed(distRoot))
-  .pipe(dest(distRoot))
-
 // 仅需复制移动的文件
 const copy = () => src(copyPaths, { ignore: ignorePath })
-  .pipe(changed(miniprogramDist))
-  .pipe(dest(miniprogramDist))
+  .pipe(changed(distRoot))
+  .pipe(dest(distRoot))
 
 // 编译移动ts文件(这里的gulp-changed必须声明 {extension: '.js'}，因为后缀从ts变成js了，如果不声明会认为你的文件也是changed了)
 const ts = () => tsProject.src()
@@ -83,23 +63,16 @@ const ts = () => tsProject.src()
   .pipe(tsProject())
   .pipe(dest(miniprogramDist))
 
-// 复制移动生产环境需要的node_modules
-const nodeModules = () => src(miniprogramNodeModulesPath)
-  .pipe(changed(miniprogramNodeModulesDist))
-  .pipe(dest(miniprogramNodeModulesDist))
-
 // 复制完node_modules后，构建小程序npm
-const npm = series(nodeModules, buildNpm)
+const npm = buildNpm
 
 const watchFiles = () => {
-  watch(imagesPath, images)
   watch(stylePath, { ignored: ignorePath }, style)
   watch(tsPath, { ignored: ignorePath }, ts)
   watch(copyPaths, { ignored: ignorePath }, copy)
-  watch(miniprogramNodeModulesPath, npm)
 }
 
-const tasks = series(parallel(ts, copy, style, projectConfig, cloudFns, images), npm)
+const tasks = series(parallel(ts, copy, style), npm)
 
 exports.npm = npm
 exports.build = tasks

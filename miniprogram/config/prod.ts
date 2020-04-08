@@ -1,3 +1,3 @@
 export default {
-  db: 'test'
+  env: 'prod'
 }
