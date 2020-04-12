@@ -1,3 +1,3 @@
 export default {
-  env: 'prod'
+  env: 'prod-lp7qq'
 }

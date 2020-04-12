@@ -1,4 +1,5 @@
 //index.js
+import wxp from '../../utils/wxp'
 const app = getApp()
 
 Page({
@@ -35,7 +36,10 @@ Page({
       }
     })
   },
-
+  async bindGetUserInfo (e) {
+    const info = await wxp.getUserInfo()
+    console.log(info)
+  },
   onGetUserInfo: function(e) {
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({

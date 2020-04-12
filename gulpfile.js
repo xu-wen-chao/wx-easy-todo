@@ -6,9 +6,11 @@ const changed = require('gulp-changed')
 const jdists = require('gulp-jdists')
 const rename = require('gulp-rename')
 const gulpTs = require('gulp-typescript')
+const replace = require('gulp-replace')
 const tsProject = gulpTs.createProject('./tsconfig.json', {
   typescript: require('ttypescript')
 })
+const projectConfig = require('./project.config.json')
 const sass = require('gulp-sass')
 sass.compiler = require('node-sass')
 
@@ -36,7 +38,7 @@ const request = axios.create({
   baseURL: `http://127.0.0.1:${devToolPort}`,
   timeout: 10000
 })
-request.interceptors.request.use(config => {
+request.interceptors.request.use((config) => {
   config.params = { ...config.params, projectpath: asbDistRoot }
   return config
 })
@@ -45,23 +47,29 @@ request.interceptors.request.use(config => {
 const buildNpm = async () => await request.get('/buildnpm')
 
 // 处理样式
-const style = () => src(stylePath, { ignore: ignorePath })
-  .pipe(changed(miniprogramDist))
-  .pipe(sass().on('error', sass.logError))
-  .pipe(rename(path => (path.extname = '.wxss')))
-  .pipe(dest(miniprogramDist))
+const style = () =>
+  src(stylePath, { ignore: ignorePath })
+    .pipe(changed(miniprogramDist))
+    .pipe(sass().on('error', sass.logError))
+    .pipe(rename((path) => (path.extname = '.wxss')))
+    .pipe(dest(miniprogramDist))
 
 // 仅需复制移动的文件
-const copy = () => src(copyPaths, { ignore: ignorePath })
-  .pipe(changed(distRoot))
-  .pipe(dest(distRoot))
+const copy = () =>
+  src(copyPaths, { ignore: ignorePath })
+    .pipe(changed(distRoot))
+    .pipe(replace('APP_ID', projectConfig.appid))
+    .pipe(replace('APP_SECRET', projectConfig.appSecret))
+    .pipe(dest(distRoot))
 
 // 编译移动ts文件(这里的gulp-changed必须声明 {extension: '.js'}，因为后缀从ts变成js了，如果不声明会认为你的文件也是changed了)
-const ts = () => tsProject.src()
-  .pipe(changed(miniprogramDist, { extension: '.js' }))
-  .pipe(jdists({ trigger: isDev ? 'dev' : 'prod' }))
-  .pipe(tsProject())
-  .pipe(dest(miniprogramDist))
+const ts = () =>
+  tsProject
+    .src()
+    .pipe(changed(miniprogramDist, { extension: '.js' }))
+    .pipe(jdists({ trigger: isDev ? 'dev' : 'prod' }))
+    .pipe(tsProject())
+    .pipe(dest(miniprogramDist))
 
 // 复制完node_modules后，构建小程序npm
 const npm = buildNpm

@@ -1,3 +1,3 @@
 export default {
-  env: 'test'
+  env: 'test-37e1d4'
 }

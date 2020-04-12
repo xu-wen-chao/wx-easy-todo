@@ -1,7 +1,7 @@
 import wxp from 'utils/wxp'
 import config from 'config/index'
 wx.cloud.init({
-  // env: config.env,
+  env: config.env,
   traceUser: true
 })
 App<IAppOption>({
