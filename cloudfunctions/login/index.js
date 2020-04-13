@@ -5,11 +5,10 @@ const WXBizDataCrypt = require('./WXBizDataCrypt')
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 })
+
 exports.main = async (event) => {
   try {
     const { encryptedData, code, iv } = event
-    const da = cloud.getWXContext()
-    console.log(da)
     const { data } = await axios.get(
       'https://api.weixin.qq.com/sns/jscode2session',
       {
