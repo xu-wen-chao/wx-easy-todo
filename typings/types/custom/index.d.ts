@@ -11,7 +11,8 @@ declare namespace WechatMiniprogram {
       option?: GetUserInfoOption
     ): Promise<{
       encryptedData: string
-      iv: string
+      iv: string,
+      userInfo: WechatMiniprogram.UserInfo
     }>
   }
   interface UserInfo {

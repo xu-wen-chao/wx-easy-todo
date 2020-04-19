@@ -1,0 +1,14 @@
+@import '../../style/var.scss';
+
+.container {
+  margin-top: 280rpx;
+}
+
+.avatar {
+  display: block;
+  width: 150rpx;
+  height: 150rpx;
+  margin: 0 auto $space-large;
+  border-radius: 50%;
+  overflow: hidden;
+}

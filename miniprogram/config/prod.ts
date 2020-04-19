@@ -1,3 +1,4 @@
 export default {
-  env: 'prod-lp7qq'
+  env: 'prod-lp7qq',
+  debug: false
 }

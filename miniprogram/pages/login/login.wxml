@@ -1,0 +1,6 @@
+<view class="container">
+  <open-data class="avatar" type="userAvatarUrl"></open-data>
+  <van-button type="info" size="large" open-type="getUserInfo" bindgetuserinfo="onLogin" bind:tap="logout">
+    {{user.isLogin ? '退出登录' : '授权登录'}}
+  </van-button>
+</view>

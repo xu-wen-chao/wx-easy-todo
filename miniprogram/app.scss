@@ -1,18 +1,10 @@
-/**app.wxss**/
+@import './style/var.scss';
+
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   box-sizing: border-box;
-}
-
-button {
-  &:focus {
-    outline: 0;
-  }
-  &:after {
-    border: none;
-  }
+  padding: 0 $space;
 }
 
 page {

@@ -46,6 +46,9 @@ request.interceptors.request.use((config) => {
 // 构建npm
 const buildNpm = async () => await request.get('/buildnpm')
 
+// 重建文件监听
+const resetFiles = async () => await request.get('/resetfileutils')
+
 // 处理样式
 const style = () =>
   src(stylePath, { ignore: ignorePath })
@@ -71,17 +74,14 @@ const ts = () =>
     .pipe(tsProject())
     .pipe(dest(miniprogramDist))
 
-// 复制完node_modules后，构建小程序npm
-const npm = buildNpm
-
 const watchFiles = () => {
   watch(stylePath, { ignored: ignorePath }, style)
   watch(tsPath, { ignored: ignorePath }, ts)
   watch(copyPaths, { ignored: ignorePath }, copy)
 }
 
-const tasks = series(parallel(ts, copy, style), npm)
+const tasks = series(copy, buildNpm, parallel(ts, style), resetFiles)
 
-exports.npm = npm
+exports.buildNpm = buildNpm
 exports.build = tasks
 exports.dev = series(tasks, watchFiles)

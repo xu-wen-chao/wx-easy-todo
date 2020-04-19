@@ -13,9 +13,11 @@
       "pages/*": ["pages/*"],
       "components/*": ["components/*"]
     },
-    "plugins": [{
+    "plugins": [
+      {
         "transform": "@zerollup/ts-transform-paths"
-    }],
+      }
+    ],
     "allowJs": false,
     "experimentalDecorators": true,
     "noImplicitThis": true,
@@ -32,14 +34,8 @@
     "strictPropertyInitialization": true,
     "noEmitHelpers": true, // 不生成帮助函数，避免重复代码
     "lib": ["ES5", "ES2015"],
-    "typeRoots": [
-      "typings"
-    ]
+    "typeRoots": ["typings"]
   },
-  "include": [
-    "./**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
 }

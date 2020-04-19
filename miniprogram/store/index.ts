@@ -1,9 +1,12 @@
-import {data as userData, getUnionId, setUnionId} from './user'
+import { data as userData, init, login, logout } from './user'
+import config from 'config/index'
+
 export default {
   data: {
     user: userData
   },
-  debug: true,
-  getUnionId,
-  setUnionId
+  debug: config.debug,
+  init,
+  login,
+  logout
 }

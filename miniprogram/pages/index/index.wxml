@@ -40,7 +40,7 @@
       <text>云调用</text>
     </navigator>
   </view>
-  <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
-    授权登录
-  </button>
+  <navigator url="/pages/login/login">
+    login
+  </navigator>
 </view>
