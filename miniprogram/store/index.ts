@@ -1,12 +1,18 @@
-import { data as userData, init, login, logout } from './user'
+import { data as userData, authInit, login, logout } from './user'
+import { data as listData, addList, deleteList, updateList, getList} from './list'
 import config from 'config/index'
 
 export default {
   data: {
-    user: userData
+    user: userData,
+    list: listData
   },
   debug: config.debug,
-  init,
+  authInit,
   login,
-  logout
+  logout,
+  addList,
+  deleteList,
+  updateList,
+  getList
 }

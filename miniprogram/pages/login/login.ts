@@ -10,7 +10,7 @@ create.Page(store, {
   use: ['user'],
   async onLogin() {
     try {
-      if (this.loading || store.data.user.isLogin) return
+      if (this.loading || store.data.user.unionId) return
       this.loading = true
       wxp.showToast({
         title: '正在登录...',
@@ -35,7 +35,7 @@ create.Page(store, {
     }
   },
   logout() {
-    if (!store.data.user.isLogin) return
+    if (!store.data.user.unionId) return
     store.logout()
     wxp.navigateBack()
     setTimeout(() => {

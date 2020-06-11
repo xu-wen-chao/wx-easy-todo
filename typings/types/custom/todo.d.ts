@@ -18,6 +18,7 @@ interface IList {
   ctime: string
   mtime: string
   creatorId: string
-  todos: Array<ITodo>
+  todo: Array<ITodo>
+  color: '#2196F3' | '#00BCD4' | '#FFEB3B'
   status: 0 | 1 // 0可操作， 1已删除
 }

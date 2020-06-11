@@ -6,15 +6,15 @@ const UnionIdStorageKey = 'unionId'
 export const data = {
   unionId: '',
   avatarUrl: unLoginAvatar,
-  nickName: '',
-  isLogin: false
+  nickName: ''
 }
 
-export const init = () => {
-  data.isLogin = !!wxp.getStorageSync(UnionIdStorageKey)
-  !data.isLogin && wxp.navigateTo({ url: pages.login })
+// 授权初始化
+export const authInit = () => {
+  data.unionId = wxp.getStorageSync(UnionIdStorageKey)
+  !data.unionId && wxp.navigateTo({ url: pages.login })
 }
-
+// 登录
 export const login = async () => {
   const { code } = await wxp.login()
   const {
@@ -35,8 +35,8 @@ export const login = async () => {
   data.avatarUrl = avatarUrl
   wxp.setStorageSync(UnionIdStorageKey, result.unionId)
 }
-
+// 退出登录
 export const logout = () => {
   wxp.removeStorageSync(UnionIdStorageKey)
-  data.isLogin = false
+  data.unionId = ''
 }
