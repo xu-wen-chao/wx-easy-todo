@@ -11,6 +11,9 @@ create.Page(store, {
   onLoad() {
     console.log('load', this.TODO_TITLE_MAX_LENGTH)
   },
+  toggleSidebar() {
+    this.selectComponent('#sidebar').toggle()
+  },
   bindInput(e: VantEvent) {
     const { detail } = e
     console.log(e)
