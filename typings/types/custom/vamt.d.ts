@@ -1,0 +1,3 @@
+interface VantEvent {
+  detail: string
+}

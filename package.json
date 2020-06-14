@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf ./dist",
-    "dev": "npm run clean && cross-env NODE_ENV=development gulp dev",
+    "dev": "cross-env NODE_ENV=development gulp dev",
     "build": "npm run clean && gulp build",
     "build:npm": "gulp npm"
   },

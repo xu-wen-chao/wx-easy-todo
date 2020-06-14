@@ -11,6 +11,7 @@
       "images/*": ["images/*"],
       "store/*": ["store/*"],
       "pages/*": ["pages/*"],
+      "constants/*": ["constants/*"],
       "components/*": ["components/*"]
     },
     "plugins": [

@@ -1,8 +1,17 @@
 <!-- index.wxml -->
 <view class="container">
-  <van-cell title="默认清单" size="large">
-    <van-icon slot="icon" name="wap-nav"/>
-  </van-cell>
+  <!-- 清单title -->
+  <van-cell title="默认清单" icon="wap-nav"></van-cell>
+  <van-field
+    type="text"
+    value="{{title}}"
+    placeholder="添加待办"
+    clearable
+    left-icon="plus"
+    bindinput="bindInput"
+    maxlength="{{TODO_TITLE_MAX_LENGTH}}"
+    bindconfirm="bindConfirm"
+  ></van-field>
   <sidebar></sidebar>
   <navigator url="/pages/login/login">login</navigator>
 </view>

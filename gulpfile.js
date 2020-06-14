@@ -31,7 +31,7 @@ const copyPaths = [
 ]
 
 const axios = require('axios')
-const ideConfigPath = `C:/Users/xuwenchao/AppData/Local/微信开发者工具/User Data/Default/.ide` // 微信开发工具配置文件路径
+const ideConfigPath = `C:/Users/xuwenchao/AppData/Local/微信开发者工具/User Data/1a695ca2de1a85735f93a43fb366c83f/Default/.ide` // 微信开发工具配置文件路径
 const devToolPort = fs.readFileSync(ideConfigPath, { encoding: 'utf-8' }) // 微信开发工具服务端端口,从配置文件中读取，因为每次启动开发工具都会改变
 const asbDistRoot = encodeURIComponent(path.resolve(distRoot))
 const request = axios.create({
