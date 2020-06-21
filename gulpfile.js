@@ -54,6 +54,7 @@ const style = () =>
   src(stylePath, { ignore: ignorePath })
     .pipe(changed(miniprogramDist))
     .pipe(sass().on('error', sass.logError))
+    .pipe(replace(/\/\*\s*(@import\s\S+)\s*\*\//g, ($1, $2) => $2))
     .pipe(rename((path) => (path.extname = '.wxss')))
     .pipe(dest(miniprogramDist))
 

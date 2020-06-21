@@ -1,1 +1,9 @@
-<van-popup pos show="{{ show }}" bindclose="toggle" position="left" duration="200">内容</van-popup>
+<van-popup show="{{ show }}" bindclose="toggle" position="left" duration="200">
+  <view class="sidebar">
+    <view class="sidebar-header">
+      <open-data type="userAvatarUrl" class="sidebar-header__avatar"></open-data>
+      <open-data type="userNickName" class="sidebar-header__name van-ellipsis"></open-data>
+    </view>
+    <view class="sidebar-body"></view>
+</view>
+</van-popup>

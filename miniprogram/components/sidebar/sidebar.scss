@@ -1,0 +1,15 @@
+.sidebar {
+  height: 100%;
+  width: 300px;
+  background: #fff;
+  &-header {
+    &__avatar {
+      display: block;
+      height: 28px;
+      width: 28px;
+    }
+    &__name {
+      display: block;
+    }
+  }
+}
