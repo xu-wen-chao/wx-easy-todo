@@ -31,12 +31,12 @@ const copyPaths = [
 ]
 
 const axios = require('axios')
-const ideConfigPath = `C:/Users/xuwenchao/AppData/Local/微信开发者工具/User Data/1a695ca2de1a85735f93a43fb366c83f/Default/.ide` // 微信开发工具配置文件路径
+const ideConfigPath = `${process.env.HOME}/Library/Application Support/微信开发者工具/50a7d9210159a32f006158795f893857/Default/.ide` // 微信开发工具配置文件路径
 const devToolPort = fs.readFileSync(ideConfigPath, { encoding: 'utf-8' }) // 微信开发工具服务端端口,从配置文件中读取，因为每次启动开发工具都会改变
 const asbDistRoot = encodeURIComponent(path.resolve(distRoot))
 const request = axios.create({
   baseURL: `http://127.0.0.1:${devToolPort}`,
-  timeout: 10000
+  timeout: 20000
 })
 request.interceptors.request.use((config) => {
   config.params = { ...config.params, projectpath: asbDistRoot }
@@ -44,7 +44,13 @@ request.interceptors.request.use((config) => {
 })
 
 // 构建npm
-const buildNpm = async () => await request.get('/buildnpm')
+const buildNpm = async () => {
+  try {
+    await request.get('/buildnpm')
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 // 重建文件监听
 const resetFiles = async () => await request.get('/resetfileutils')
