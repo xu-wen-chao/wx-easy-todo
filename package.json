@@ -16,6 +16,7 @@
     "@zerollup/ts-transform-paths": "^1.7.15",
     "axios": "^0.19.2",
     "cross-env": "^7.0.2",
+    "glob": "^7.1.6",
     "gulp": "^4.0.2",
     "gulp-changed": "^4.0.2",
     "gulp-debug": "^4.0.0",

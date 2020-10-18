@@ -12,6 +12,7 @@ const tsProject = gulpTs.createProject('./tsconfig.json', {
 })
 const projectConfig = require('./project.config.json')
 const sass = require('gulp-sass')
+const glob = require('glob')
 sass.compiler = require('node-sass')
 
 const distRoot = 'dist'
@@ -29,9 +30,8 @@ const copyPaths = [
   `!${tsPath}`,
   `!${stylePath}`
 ]
-
 const axios = require('axios')
-const ideConfigPath = `${process.env.HOME}/Library/Application Support/微信开发者工具/50a7d9210159a32f006158795f893857/Default/.ide` // 微信开发工具配置文件路径
+const ideConfigPath = glob.sync(`${process.env.HOME}/Library/Application Support/微信开发者工具/**/Default/.ide`)[0] // 获取微信开发工具配置文件路径
 const devToolPort = fs.readFileSync(ideConfigPath, { encoding: 'utf-8' }) // 微信开发工具服务端端口,从配置文件中读取，因为每次启动开发工具都会改变
 const asbDistRoot = encodeURIComponent(path.resolve(distRoot))
 const request = axios.create({
