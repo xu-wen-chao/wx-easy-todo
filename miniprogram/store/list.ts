@@ -1,5 +1,6 @@
 import { data as userData } from './user'
-import DB from './db'
+// import DB from './db'
+import wxp from 'utils/wxp'
 
 export const data = {
   list: []
@@ -12,6 +13,9 @@ export const deleteList = () => {}
 export const updateList = () => {}
 // 获取清单列表
 export const getList = async () => {
-  const data = await DB.list.where({ unionId: userData.unionId }).get()
-  console.log('data', data)
+  const { result } = await wxp.cloud.callFunction({
+    name: 'getList',
+    data: { unionId: userData.unionId }
+  })
+  console.log('res', result)
 }

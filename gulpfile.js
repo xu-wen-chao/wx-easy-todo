@@ -41,6 +41,7 @@ const project = new ci.Project({
 // 构建npm
 const buildNpm = async () => {
   const warning = await ci.packNpm(project, {
+    ignores: [`${cloudfunctionsRoot}/**`],
     reporter: (infos) => {
       console.log(infos)
     }

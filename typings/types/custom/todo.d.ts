@@ -6,7 +6,8 @@ interface ITodo {
   mtime: string
   star: boolean
   content: string
-  status: 0 | 1 | 2 // 0未完成，1完成，2已删除
+  status: 0 | 1 // 0未完成，1完成
+  deleted: boolean
   progress: number
   priority: 0 | 1 | 2 // 0优先级低，1优先级中，2优先级高
   items?: Array<ITodo>
@@ -15,10 +16,11 @@ interface ITodo {
 interface IList {
   _id: string
   title: string
+  type: 0 | 1 // 0为默认列表，1为自定义新建列表Î
   ctime: string
   mtime: string
   creatorId: string
-  todo: Array<ITodo>
+  todos: Array<ITodo>
   color: '#2196F3' | '#00BCD4' | '#FFEB3B'
-  status: 0 | 1 // 0可操作， 1已删除
+  deleted: boolean
 }
