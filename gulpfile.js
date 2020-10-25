@@ -1,5 +1,4 @@
 const path = require('path')
-const fs = require('fs')
 const { src, dest, series, parallel, watch } = require('gulp')
 const debug = require('gulp-debug')
 const changed = require('gulp-changed')
@@ -7,6 +6,7 @@ const jdists = require('gulp-jdists')
 const rename = require('gulp-rename')
 const gulpTs = require('gulp-typescript')
 const replace = require('gulp-replace')
+const lazypipe = require('lazypipe')
 const tsProject = gulpTs.createProject('./tsconfig.json', {
   typescript: require('ttypescript')
 })
@@ -49,6 +49,17 @@ const buildNpm = async () => {
   console.warn(warning)
 }
 
+// 注入项目配置
+const injectConfig = lazypipe()
+  .pipe(replace, '$APP_ID', projectConfig.appid)
+  .pipe(replace, '$APP_SECRET', projectConfig.appSecret)
+  .pipe(
+    replace,
+    '$ENV',
+    isDev ? 'dev-5gp2zlk8c53a4e6a' : 'prod-3grgwirt8edb736c'
+  )
+  .pipe(replace, '$DEBUG', isDev)
+
 // 处理样式
 const style = () =>
   src(stylePath, { ignore: ignorePath })
@@ -62,8 +73,7 @@ const style = () =>
 const copy = () =>
   src(copyPaths, { ignore: ignorePath })
     .pipe(changed(distRoot))
-    .pipe(replace('APP_ID', projectConfig.appid))
-    .pipe(replace('APP_SECRET', projectConfig.appSecret))
+    .pipe(injectConfig())
     .pipe(dest(distRoot))
 
 // 编译移动ts文件(这里的gulp-changed必须声明 {extension: '.js'}，因为后缀从ts变成js了，如果不声明会认为你的文件也是changed了)
@@ -71,7 +81,7 @@ const ts = () =>
   tsProject
     .src()
     .pipe(changed(miniprogramDist, { extension: '.js' }))
-    .pipe(jdists({ trigger: isDev ? 'dev' : 'prod' }))
+    .pipe(injectConfig())
     .pipe(tsProject())
     .pipe(dest(miniprogramDist))
 

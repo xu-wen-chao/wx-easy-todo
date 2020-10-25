@@ -13,14 +13,14 @@ exports.main = async (event) => {
       'https://api.weixin.qq.com/sns/jscode2session',
       {
         params: {
-          appid: 'APP_ID',
-          secret: 'APP_SECRET',
+          appid: '$APP_ID',
+          secret: '$APP_SECRET',
           js_code: code,
           grant_type: 'authorization_code'
         }
       }
     )
-    const wxdc = new WXBizDataCrypt('APP_ID', data.session_key)
+    const wxdc = new WXBizDataCrypt('$APP_ID', data.session_key)
     return wxdc.decryptData(encryptedData, iv)
   } catch (error) {
     console.error(error)
